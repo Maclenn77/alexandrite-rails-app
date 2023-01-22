@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../alexandrite/.idea/alexandrite.iml" filepath="$PROJECT_DIR$/../alexandrite/.idea/alexandrite.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/alexandrite-rails-app.iml" filepath="$PROJECT_DIR$/.idea/alexandrite-rails-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../alexandrite-react-app/.idea/alexandrite-react-app.iml" filepath="$PROJECT_DIR$/../alexandrite-react-app/.idea/alexandrite-react-app.iml" />
     </modules>
   </component>
 </project>
