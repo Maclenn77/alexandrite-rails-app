@@ -1,7 +1,7 @@
 PATH
   remote: ../alexandrite
   specs:
-    alexandrite (0.1.0.pre.alpha)
+    alexandrite (0.1.1.pre.alpha)
 
 GEM
   remote: https://rubygems.org/
