@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  message: MyText
+  origin: MyString
+  created_at: 2023-01-21 22:39:33
+  details: MyText
+
+two:
+  message: MyText
+  origin: MyString
+  created_at: 2023-01-21 22:39:33
+  details: MyText
