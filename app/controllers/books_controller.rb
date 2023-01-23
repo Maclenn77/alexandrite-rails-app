@@ -9,7 +9,7 @@ class BooksController < ApplicationController
   before_action :find_book, only: %i[ddc lcc delete show]
 
   def index
-    render json: Book.all.limit(50), status: :ok
+    render json: Book.all.limit(50).order(id: :desc), status: :ok
   end
 
   def show
@@ -25,13 +25,13 @@ class BooksController < ApplicationController
       result = ErrorMessage.create(error_message)
     end
 
-    message = if result.instance_of?(ErrorMessage)
-                result.message
+    status = if result.instance_of?(ErrorMessage)
+                :unprocessable_entity
               else
-                "The book '\"'#{result.title}\" was created successfully"
+                :ok
               end
 
-    render json: { message: "#{message}" }, status: :ok
+    render json: @book, status: status
   end
 
   def bulk
@@ -107,6 +107,7 @@ class BooksController < ApplicationController
     key = params['key']
     query = params['query']
     @book = create_book(key, query)
+    @book[:authors] = [@book[:authors]] if @book[:data_source] == "OCLC API"
     @book[:book_id] = query.to_i
     @book[:key] = key
   end
@@ -128,6 +129,7 @@ class BooksController < ApplicationController
 
   def get_bulk_data
     key = params['key']
+    binding.pry
     data = params['data'].split(',')
     @books = bulk_create(key, data)
   end

@@ -16,5 +16,5 @@ Rails.application.routes.draw do
 
   post 'books/create', defaults: { format: :json }
 
-  post 'books/delete', defaults: { format: :json }
+  delete 'books/delete', defaults: { format: :json }
 end
