@@ -9,7 +9,7 @@ class BooksController < ApplicationController
   before_action :find_book, only: %i[ddc lcc delete show]
 
   def index
-    render json: Book.all.limit(50).order(id: :desc), status: :ok
+    render json: Book.all.limit(25).order(id: :desc), status: :ok
   end
 
   def show
@@ -36,26 +36,27 @@ class BooksController < ApplicationController
 
   def bulk
     key = params['key']
-    data = params['data'].split(',')
+
     count = { created: 0,
               errors: 0 }
 
     @books.each_with_index do |book, i|
-      book[:book_id] = data[i]
+      book[:book_id] = @data[i]
       book[:key] = key
 
       if book[:error_message]
         count[:errors] += 1
         error_message = create_error_message(book)
-
-        ErrorMessage.create(error_message)
+          ErrorMessage.create(error_message)
       else
         count[:created] += 1
         Book.create(book.except(:key))
       end
     end
+    # TODO: Change with logger
+    puts "Errors= #{count[:errors]}. Created = #{count[:created]}"
 
-    render plain: "Added #{count[:created]} new books. #{count[:errors]} books failed. Check logs for more details",
+    render json: Book.all.limit(50),
            status: :ok
   end
 
@@ -129,9 +130,9 @@ class BooksController < ApplicationController
 
   def get_bulk_data
     key = params['key']
-    binding.pry
-    data = params['data'].split(',')
-    @books = bulk_create(key, data)
+    @data = File.read(params['data']).split
+
+    @books = bulk_create(key, @data)
   end
 
   def book_params
