@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   get 'error_messages', to: 'error_messages#index'
   get 'error_messages/show'
   delete 'error_messages/delete'

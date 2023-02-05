@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'alexandrite'
 require 'pry'
 
+# Books controller
 class BooksController < ApplicationController
   include Alexandrite
 
@@ -13,7 +16,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    render :json => @book, status: :ok
+    render json: @book, status: :ok
   end
 
   def create
@@ -26,12 +29,12 @@ class BooksController < ApplicationController
     end
 
     status = if result.instance_of?(ErrorMessage)
-                :unprocessable_entity
-              else
-                :ok
-              end
+               :unprocessable_entity
+             else
+               :ok
+             end
 
-    render json: @book, status: status
+    render json: @book, status:
   end
 
   def bulk
@@ -42,12 +45,13 @@ class BooksController < ApplicationController
 
     @data.each_with_index do |query, i|
       book = create_book(key, query)
-      book[:book_id], book[:key] = @data[i], key
+      book[:book_id] = @data[i]
+      book[:key] = key
 
       if book[:error_message]
         count[:errors] += 1
         error_message = create_error_message(book)
-          ErrorMessage.create(error_message)
+        ErrorMessage.create(error_message)
       else
         count[:created] += 1
         Book.create(book.except(:key))
@@ -96,7 +100,7 @@ class BooksController < ApplicationController
   def edit; end
 
   def delete
-    @book.destroy! if @book
+    @book&.destroy!
 
     render json: { message: 'Book deleted' }, status: :ok
   end
@@ -107,7 +111,7 @@ class BooksController < ApplicationController
     key = params['key']
     query = params['query']
     @book = create_book(key, query)
-    @book[:authors] = [@book[:authors]] if @book[:data_source] == "OCLC API"
+    @book[:authors] = [@book[:authors]] if @book[:data_source] == 'OCLC API'
     @book[:book_id] = query.to_i
     @book[:key] = key
   end

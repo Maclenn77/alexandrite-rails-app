@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorMessagesController < ApplicationController
   before_action :set_error_message, only: %i[show delete]
   def index
@@ -17,7 +19,7 @@ class ErrorMessagesController < ApplicationController
   def delete_all
     error_messages = ErrorMessage.all
 
-    error_messages.each { |error| error.destroy! }
+    error_messages.each(&:destroy!)
 
     render json: { message: 'Error messages were deleted successfully.' }, status: :ok
   end

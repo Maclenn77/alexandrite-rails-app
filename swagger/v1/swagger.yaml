@@ -1,0 +1,34 @@
+---
+swagger: '2.0'
+info:
+  title: API V1
+  version: v1
+paths:
+  "/books/create":
+    post:
+      summary: Add a book
+      tags:
+      - Books
+      consumes:
+      - application/json
+      parameters:
+      - name: key
+        in: query
+        type: string
+      - name: query
+        in: query
+        type: string
+      responses:
+        '200':
+          description: book created
+  "/":
+    get:
+      summary: list books
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
