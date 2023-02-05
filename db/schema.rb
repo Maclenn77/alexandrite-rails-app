@@ -10,38 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_122_082_451) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_25_004341) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'books', force: :cascade do |t|
-    t.bigint 'book_id', null: false
-    t.string 'title', null: false
-    t.string 'authors', default: [], array: true
-    t.string 'publisher'
-    t.text 'description'
-    t.string 'language'
-    t.string 'country'
-    t.bigint 'isbn10'
-    t.bigint 'isbn13'
-    t.string 'ddc'
-    t.string 'lcc'
-    t.string 'categories', default: [], array: true
-    t.integer 'page_count'
-    t.date 'published_date'
-    t.string 'suggested_classifications', default: [], array: true
-    t.string 'error_message'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'data_source'
+  create_table "books", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.string "title", null: false
+    t.string "authors", default: [], array: true
+    t.string "publisher"
+    t.text "description"
+    t.string "language"
+    t.string "country"
+    t.bigint "isbn10"
+    t.bigint "isbn13"
+    t.string "ddc"
+    t.string "lcc"
+    t.string "categories", default: [], array: true
+    t.integer "page_count"
+    t.date "published_date"
+    t.string "suggested_classifications", default: [], array: true
+    t.string "error_message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "data_source"
   end
 
-  create_table 'error_messages', force: :cascade do |t|
-    t.text 'message'
-    t.string 'origin'
-    t.text 'details'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.bigint 'error_id'
+  create_table "error_messages", force: :cascade do |t|
+    t.text "message"
+    t.string "origin"
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "error_id"
   end
+
 end

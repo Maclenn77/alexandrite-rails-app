@@ -40,9 +40,9 @@ class BooksController < ApplicationController
     count = { created: 0,
               errors: 0 }
 
-    @books.each_with_index do |book, i|
-      book[:book_id] = @data[i]
-      book[:key] = key
+    @data.each_with_index do |query, i|
+      book = create_book(key, query)
+      book[:book_id], book[:key] = @data[i], key
 
       if book[:error_message]
         count[:errors] += 1
@@ -53,8 +53,7 @@ class BooksController < ApplicationController
         Book.create(book.except(:key))
       end
     end
-    # TODO: Change with logger
-    puts "Errors= #{count[:errors]}. Created = #{count[:created]}"
+    Rails.logger.info "Finished. Errors= #{count[:errors]}. Created = #{count[:created]}"
 
     render json: Book.all.limit(50),
            status: :ok
@@ -129,10 +128,7 @@ class BooksController < ApplicationController
   end
 
   def get_bulk_data
-    key = params['key']
     @data = File.read(params['data']).split
-
-    @books = bulk_create(key, @data)
   end
 
   def book_params
