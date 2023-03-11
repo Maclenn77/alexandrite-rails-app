@@ -6,7 +6,7 @@ info:
 paths:
   "/books/create":
     post:
-      summary: Add a book
+      summary: Add a new book
       tags:
       - Books
       consumes:
@@ -15,15 +15,51 @@ paths:
       - name: key
         in: query
         type: string
+        description: 'Add a field to query, such as: ISBN, Author or Title'
       - name: query
         in: query
         type: string
+        description: Add a query
       responses:
         '200':
-          description: book created
+          description: A book was created
+  "/books/bulk":
+    post:
+      summary: bulk create books
+      tags:
+      - Books
+      consumes:
+      - multipart/form-data
+      parameters:
+      - name: key
+        in: query
+        type: string
+        description: A field to query, such as ISBN or ISSN
+      - name: data
+        in: formData
+        type: file
+        description: A file with txt extension, with a value in each new line
+      responses:
+        '200':
+          description: books created
   "/":
     get:
       summary: list books
+      responses:
+        '200':
+          description: successful
+  "/books/delete":
+    delete:
+      summary: Delete a book
+      tags:
+      - Books
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        type: string
+        description: ID of a book in the database
       responses:
         '200':
           description: successful
@@ -31,4 +67,4 @@ servers:
 - url: https://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000
